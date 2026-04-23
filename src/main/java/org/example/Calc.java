@@ -5,7 +5,8 @@ public class Calc {
     private static int pos;
 
     public static int run(String expression) {
-        tokens = expression.split(" ");
+        String replace = expression.replace("(", " ( ").replace(")", " ) ");
+        tokens = replace.trim().split("\\s+");
         pos = 0;
         return parseExpr();
     }
@@ -31,7 +32,7 @@ public class Calc {
         int result = parseNumber();
 
         while (pos < tokens.length) {
-            String op =  tokens[pos];
+            String op = tokens[pos];
             if (!op.equals("*")) break;
             pos++;
             int right = parseNumber();
@@ -41,6 +42,14 @@ public class Calc {
     }
 
     private static int parseNumber() {
+        if (tokens[pos].equals("(")) {
+            pos++;
+            int result = parseExpr();
+            if (tokens[pos].equals(")")) {
+                return result;
+            }
+        }
+
         return Integer.parseInt(tokens[pos++]);
     }
 }
