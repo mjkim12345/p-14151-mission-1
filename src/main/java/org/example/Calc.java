@@ -46,10 +46,10 @@ public class Calc {
             pos++;
             int result = parseExpr();
             if (tokens[pos].equals(")")) {
+                pos++;
                 return result;
             }
         }
-
         return Integer.parseInt(tokens[pos++]);
     }
 }
