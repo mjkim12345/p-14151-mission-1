@@ -5,7 +5,7 @@ public class Calc {
     private static int pos;
 
     public static int run(String expression) {
-        String replace = expression.replace("(", " ( ").replace(")", " ) ");
+        String replace = expression.replace("(", " ( ").replace(")", " ) ").replace("-", " - ");
         tokens = replace.trim().split("\\s+");
         pos = 0;
         return parseExpr();
@@ -49,6 +49,11 @@ public class Calc {
                 pos++;
                 return result;
             }
+        } else if (tokens[pos].equals("-")) {
+            pos++;
+            int result = parseNumber();
+            result *= -1;
+            return result;
         }
         return Integer.parseInt(tokens[pos++]);
     }
